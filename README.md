@@ -51,4 +51,17 @@ Buka http://localhost:8000. File database dibuat otomatis di `database/app.sqlit
      php -S localhost:8000 -t public
    ```
 
-Jika memakai XAMPP/Laragon, letakkan proyek di `htdocs`/`www` lalu akses folder `public/`.
+### Lewat XAMPP / Laragon (phpMyAdmin)
+
+1. Jalankan **Apache** dan **MySQL** dari control panel XAMPP/Laragon.
+2. Buka phpMyAdmin (http://localhost/phpmyadmin) → tab **Import** → pilih
+   `database/schema.mysql.sql` → **Go**. Database `crud_produk` beserta tabel
+   `products` akan dibuat.
+3. Edit `config/config.php`, ubah baris driver menjadi:
+   ```php
+   'driver' => getenv('DB_DRIVER') ?: 'mysql',
+   ```
+   Sesuaikan `username`/`password` bila perlu (default XAMPP: `root` tanpa password).
+4. Salin folder proyek ke `htdocs` (XAMPP) atau `www` (Laragon), lalu buka
+   http://localhost/codex-claude/public/
+5. Opsional, isi data contoh: `php database/seed.php` (jalankan dari folder proyek).

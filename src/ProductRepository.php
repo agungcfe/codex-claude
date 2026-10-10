@@ -12,8 +12,11 @@ final class ProductRepository
         $where  = '';
         $params = [];
         if ($search !== '') {
-            $where = 'WHERE name LIKE :q OR sku LIKE :q OR category LIKE :q';
-            $params[':q'] = '%' . $search . '%';
+            // Placeholder dibuat unik karena MySQL (native prepare) tidak mengizinkan
+            // nama placeholder yang sama dipakai lebih dari sekali.
+            $where = 'WHERE name LIKE :q1 OR sku LIKE :q2 OR category LIKE :q3';
+            $like  = '%' . $search . '%';
+            $params = [':q1' => $like, ':q2' => $like, ':q3' => $like];
         }
 
         $count = $this->db->prepare("SELECT COUNT(*) FROM products $where");
